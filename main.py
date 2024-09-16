@@ -2,8 +2,9 @@ def menu():
     print("""
 [1] Adicionar alunos e notas
 [2] Exibir alunos e notas
+[3] Sair
 """)
-    opc = validadorDeNumero('Digite uma das opções: ')
+    opc = validadorDeNumeroInt('Digite uma das opções: ')
     return opc
 
 
@@ -12,7 +13,7 @@ def removeVirgura(num):
     return float(numero)
 
 
-def validadorDeNumero(msg, n=None):
+def validadorDeNumeroFloat(msg, n=None):
     while True:
         try:
             n = str(input(msg.format(n)))
@@ -23,19 +24,28 @@ def validadorDeNumero(msg, n=None):
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
+def validadorDeNumeroInt(msg, n=None):
+    while True:
+        try:
+            numero = int(input(msg.format(n)))    
+            return numero
+        except ValueError:
+            print('\033[31mERRO!! Valor invalido\033[m')
+
+
 def cadastroAluno():
     while True:
         notas = []
         nome = ''
-        num = 1
+        
 
         nome = str(input('Digite o nome do aluno: ')).capitalize()
-        provas = validadorDeNumero('Quantas provas o {} fez: ', nome)
+        provas = validadorDeNumeroInt('Quantas provas o {} fez: ', nome)
 
-        while num < provas + 1:
-            nota = validadorDeNumero('Digite a {}º nota: ', num)
+        for num in range(0, provas):
+            nota = validadorDeNumeroFloat('Digite a {}º nota: ', num + 1)
             notas.append(nota)
-            num += 1
+            
 
         alunos[nome] = tuple(notas)
     

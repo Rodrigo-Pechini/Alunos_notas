@@ -66,7 +66,7 @@ def cadastroAluno():
         
 
         nome = str(input('Digite o nome do aluno: ')).capitalize()# Entrada do nome do aluno
-        provas = validadorDeNumeroInt('Quantas provas o {} fez: ', nome)# Entrada de quantidades de notas e serem inseridas
+        provas = validadorDeNumeroInt('Quantas atividades/provas o {} fez: ', nome)# Entrada de quantidades de notas e serem inseridas
 
         for num in range(0, provas):# Um loop finito
             nota = validadorDeNumeroFloat('Digite a {}º nota: ', num + 1)# Entrada de notas do aluno

@@ -54,6 +54,21 @@ def validadorDeNumeroInt(msg, n=None):
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
+def validadorDeNome(msg):
+    """
+    Valida a entrada do nome do aluno verifica se tem algum erro de digitação,
+    com espaços entre as letras, espaço em branco ou numero no nome
+    msg: uma mensagem personalizada
+    return: Retorna o nomel do aluno
+    """
+    while True:# Loop infinito
+        nome = str(input(msg))# Recebe um entrada qualquer do usuario.   
+        if nome.isalpha() and nome != '':# Verifica a entrada do usuario.
+            return nome# Retorna o a entrada do usuario.
+        else:# Mensagem de erro.
+            print('\033[31mERRO!! Valor invalido\033[m')
+
+
 def cadastroAluno():
     """
     Cadastra o nome do aluno e suas notas, adiciona os valores em um dicionario
@@ -64,10 +79,7 @@ def cadastroAluno():
         notas = []# Lista de notas
         nome = ""# Nome do aluno
         
-
-        nome = str(input('Digite o nome do aluno: ')).capitalize()# Entrada do nome do aluno
-        if len(nome) > 0 or nome.isnumeric:
-            print('olaaaaa')
+        nome = validadorDeNome('Digite o nome do aluno: ').capitalize().strip()# Entrada do nome do aluno
         provas = validadorDeNumeroInt('Quantas atividades/provas o {} fez: ', nome)# Entrada de quantidades de notas e serem inseridas
 
         for num in range(0, provas):# Um loop finito

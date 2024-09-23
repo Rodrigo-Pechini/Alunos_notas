@@ -16,6 +16,3 @@ Este programa apresenta um sistema simples para gerenciar cadastro de alunos e s
 **Considerações:**
 
 Para desenvolver este código, me dedico à organização, lógica e clareza para torná-lo fácil de entender, especialmente para iniciantes em programação. A parte de validar o número float e remover a vírgula foi um desafio, mas consegui lidar com ele de forma simples e acredito que quem não entenda nada de programação ou seja iniciante compreendê-lo facilmente devido aos comentários explicativos e à sintaxes do código.
-
-
-**Pontos a se melhorar:**

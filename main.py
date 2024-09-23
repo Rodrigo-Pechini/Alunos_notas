@@ -11,6 +11,7 @@ def menu():
     Exibe uma serie de opções
     return: A o numero da opção escolhida
     """
+    cabecalho('MENU')
     print("""
 [1] Adicionar alunos e notas
 [2] Exibir alunos e notas
@@ -26,11 +27,11 @@ def cabecalho(msg):
     msg: Mensagem personalizada
     return: Não tem retorno
     """
-    tamanho = len(msg) + 4# Recebe e indentifica quantos caracteres tem e soma com mais 4
+    tamanho = len(msg) + 30# Recebe e indentifica quantos caracteres tem e soma com mais 4
 
     # Exibe o cabeçalho
     print('=' * tamanho)
-    print(f"  {msg}")
+    print(msg.center(tamanho, "-"))
     print('=' * tamanho)
 
 
@@ -174,7 +175,7 @@ def media(notas):
  
 
 #Programa principal
-alunos = {'Rodrigo': (0, 3, 2, 1), 'Natan': (0, 8, 9, 10)}# Dicionario dos alunos
+alunos = {'Rodrigo': (0, 3.5, 2, 1), 'Natan': (0, 8, 9, 10)}# Dicionario dos alunos
 
 
 while True:

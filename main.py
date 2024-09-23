@@ -31,11 +31,11 @@ def validadorDeNumeroFloat(msg, n=None):
     """
     while True:# Loop infinito
         try:# Tratamento de erro.
-            n = str(input(msg.format(n)))# Recebe um entrada qualquer do usuario.
-            numero = removeVirgura(n)# Remove a vilgula e volta como float.
+            numero = str(input(msg.format(n)))# Recebe um entrada qualquer do usuario.
+            numero = removeVirgura(numero)# Remove a vilgula e volta como float.
             if type(numero) == float:# Analiza se o tipo é float.
                 return numero# Retorna o a entrada do usuario.
-        except ValueError:# Erro a ser tratato.
+        except (ValueError, IndexError):# Erro a ser tratato.
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
@@ -62,10 +62,12 @@ def cadastroAluno():
     """
     while True:# Loop infinito
         notas = []# Lista de notas
-        nome = ''# Nome do aluno
+        nome = ""# Nome do aluno
         
 
         nome = str(input('Digite o nome do aluno: ')).capitalize()# Entrada do nome do aluno
+        if len(nome) > 0 or nome.isnumeric:
+            print('olaaaaa')
         provas = validadorDeNumeroInt('Quantas atividades/provas o {} fez: ', nome)# Entrada de quantidades de notas e serem inseridas
 
         for num in range(0, provas):# Um loop finito
@@ -115,14 +117,13 @@ def media(notas):
     soma = sum(notas)# soma de todas as notas
     m = soma / len(notas)# Calcula a média
     return m# retorno da média
-
+ 
 
 #Programa principal
 alunos = {'Rodrigo': (0, 3, 2, 1), 'Natan': (0, 8, 9, 10)}# Dicionario dos alunos
 
 
 while True:
-    print('==' * 20)
     
     opc = menu()# Entrada para opções
 

@@ -1,3 +1,11 @@
+def LimparTela():
+    """
+    Uma função para limpar o terminal.
+    """
+    import os # Importa uma biblioteca
+    os.system('cls')# função a ser utilizada
+
+
 def menu():
     """
     Exibe uma serie de opções
@@ -10,6 +18,20 @@ def menu():
 """)
     opc = validadorDeNumeroInt('Digite uma das opções: ')
     return opc
+
+
+def cabecalho(msg):
+    """
+    Um cabeçalho.
+    msg: Mensagem personalizada
+    return: Não tem retorno
+    """
+    tamanho = len(msg) + 4# Recebe e indentifica quantos caracteres tem e soma com mais 4
+
+    # Exibe o cabeçalho
+    print('=' * tamanho)
+    print(f"  {msg}")
+    print('=' * tamanho)
 
 
 def removeVirgura(num):
@@ -75,7 +97,10 @@ def cadastroAluno():
     sendo o nome do aluno a key e suas notas uma tupla sendo o valor da key
     return: Não tem retorno
     """
+    
     while True:# Loop infinito
+        LimparTela()
+        cabecalho('CADASTRO DE ALUNOS')
         notas = []# Lista de notas
         nome = ""# Nome do aluno
         
@@ -89,11 +114,19 @@ def cadastroAluno():
         # Adiciona o nome do aluno no dicionario com key e sua lista de notas é convertida para tupla
         # e adicionada com valor
         alunos[nome] = tuple(notas)
-    
-        opc = str(input('Continuar adicionando alunos? [S/N] ')).upper().strip()[0]# Entrada para continuar ou não com a função
+
+        while True:# Loop infinito
+            try:
+                opc = str(input('Continuar adicionando alunos? [S/N] ')).upper().strip()[0]# Entrada para continuar ou não com a função
+                if opc in 'SN':# Verifica a entrada do usuario.
+                    break# Finaliza o loop
+                print('\033[31mERRO!! Valor invalido\033[m')
+            except IndexError:
+                print('\033[31mERRO!! Valor invalido\033[m')
 
         if opc == 'N':
-            break# finaliza com a função
+            LimparTela()
+            break# Finaliza com a função
 
 
 def exibirAlunos(cadastros):
@@ -103,6 +136,8 @@ def exibirAlunos(cadastros):
     return: Não tem retorno
     """
     from time import sleep
+    LimparTela()
+    cabecalho('BOLETIM')
     if len(cadastros) > 0:
         for k, v in cadastros.items():# Loop finito
             # k == key ==  nome do aluno 
@@ -112,12 +147,19 @@ def exibirAlunos(cadastros):
             for e, n in enumerate(v):# Loop finito
                 # e == enumerate 
                 # n == nota
-                print(f'\t{e + 1}º nota: {n}')
+                print(f'\t{e + 1}º nota: {n:.1f}')
                 sleep(0.5)
             print(f'Meidia final do aluno {k} é de {media(v):.1f}')
             print("==" * 20)
     else:
         print('Nenhum aluno foi cadastrado ainda')
+
+    while True:#Loop infinito
+        opc = validadorDeNumeroInt('Digite 999 para sair: ')# Entrada para finalizar a função
+        if opc == 999:# Verifica a entrada do usuario.
+            LimparTela()# Chama a função para limpar o terminal
+            break# finaliza o programa
+        print('\033[31mERRO!! Valor invalido\033[m')
 
 
 def media(notas):
@@ -140,14 +182,13 @@ while True:
     opc = menu()# Entrada para opções
 
     if opc == 1:# Cadastro do aluno
-        print('==' * 20)
         cadastroAluno()# Chama a função para o cadastro do aluno 
     elif opc == 2:# Exibir os alunos, suas notas e média
-        print('==' * 20)
         exibirAlunos(cadastros=alunos)# Chama a função para exibir o desempenho dos alunos
     elif opc == 3:# finaliza o programa
         print('==' * 20) 
         print('Obrigado volte sempre!')
         break
     else:# Caso entrada de algum valor errado.
+        LimparTela()
         print('\033[31mDigite uma opção validada.\033[m')

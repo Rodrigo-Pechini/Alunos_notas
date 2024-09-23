@@ -7,6 +7,8 @@ Este programa apresenta um sistema simples para gerenciar cadastro de alunos e s
 **Funcionalidades:**
 
 * **Menu:** Um menu interativo com opções de cadastro de alunos, visualização de dados e exibição de alunos cadastrados.
+* **Cabeçalho:** Exibe um cabeçalho.
+* **Limpa tela:** Limpa o terminal para melhor visibilidade durante a execução do programa.
 * **Validador de Número Inteiro:** Verifica se a entrada do usuário é um número inteiro, evitando erros na digitação e garantindo a consistência dos dados.
 * **Validador de Número Float e Remover Virgula:**  Utiliza para adicionar notas, corrigindo possíveis entradas com vírgula e convertendo para o formato correto.
 * **Validador de Nome:** Verifica a entrada do usuario digitou um nome corretamente, sem espaços entre as letras, sem numeros ou entrada vazia. 

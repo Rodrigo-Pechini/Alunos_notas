@@ -35,14 +35,22 @@ def cabecalho(msg):
     print('=' * tamanho)
 
 
-def removeVirgura(num):
+def validadorDeNumeroInt(msg, n=None):
+    """    
+    Valida a entrada de um numero se ele é inteiro ou não
+    msg: uma mensagem personalizada
+    n: serve para formatação
+    return: retorna o numero da entrada
     """
-    Recebe um numero em formato str com virgula e retorna ele com um ponto
-    e em formato float.
-    num: O numero com virgula.
-    """
-    numero = num.replace(',', '.')# Remove a virgula do numero e adiciona um ponto.
-    return float(numero)# Retorna o numero em float com ponto
+    while True:# Loop infinito
+        try:# Tratamento de erro.
+            numero = int(input(msg.format(n)))# Recebe um entrada qualquer do usuario.
+            if numero > 0:# Verifica a entrada do usuario.   
+                return numero# Retorna o a entrada do usuario.
+            else:
+                print('\033[31mERRO!! Valor invalido\033[m')
+        except ValueError:# Erro a ser tratato.
+            print('\033[31mERRO!! Valor invalido\033[m')
 
 
 def validadorDeNumeroFloat(msg, n=None):
@@ -62,19 +70,15 @@ def validadorDeNumeroFloat(msg, n=None):
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
-def validadorDeNumeroInt(msg, n=None):
-    """    
-    Valida a entrada de um numero se ele é inteiro ou não
-    msg: uma mensagem personalizada
-    n: serve para formatação
-    return: retorna o numero da entrada
+def removeVirgura(num):
     """
-    while True:# Loop infinito
-        try:# Tratamento de erro.
-            numero = int(input(msg.format(n)))# Recebe um entrada qualquer do usuario.   
-            return numero# Retorna o a entrada do usuario.
-        except ValueError:# Erro a ser tratato.
-            print('\033[31mERRO!! Valor invalido\033[m')
+    Recebe um numero em formato str com virgula e retorna ele com um ponto
+    e em formato float.
+    num: O numero com virgula.
+    return: Retorna o valor numerico sem a virgula
+    """
+    numero = num.replace(',', '.')# Remove a virgula do numero e adiciona um ponto.
+    return float(numero)# Retorna o numero em float com ponto
 
 
 def validadorDeNome(msg):
@@ -85,7 +89,7 @@ def validadorDeNome(msg):
     return: Retorna o nomel do aluno
     """
     while True:# Loop infinito
-        nome = str(input(msg))# Recebe um entrada qualquer do usuario.   
+        nome = str(input(msg))# Recebe um entrada qualquer do usuario.  
         if nome.isalpha() and nome != '':# Verifica a entrada do usuario.
             return nome# Retorna o a entrada do usuario.
         else:# Mensagem de erro.
@@ -175,7 +179,7 @@ def media(notas):
  
 
 #Programa principal
-alunos = {'Rodrigo': (0, 3.5, 2, 1), 'Natan': (0, 8, 9, 10)}# Dicionario dos alunos
+alunos = {'Rodrigo': (0, 3.5, 2, 1), }# Dicionario dos alunos
 
 
 while True:

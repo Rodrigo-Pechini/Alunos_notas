@@ -64,7 +64,7 @@ def validadorDeNumeroFloat(msg, n=None):
         try:# Tratamento de erro.
             numero = str(input(msg.format(n)))# Recebe um entrada qualquer do usuario.
             numero = removeVirgura(numero)# Remove a vilgula e volta como float.
-            if type(numero) == float:# Analiza se o tipo é float.
+            if isinstance(numero, float):# Analiza se o tipo é float.
                 return numero# Retorna o a entrada do usuario.
         except (ValueError, IndexError):# Erro a ser tratato.
             print('\033[31mERRO!! Valor invalido\033[m')

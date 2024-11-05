@@ -92,13 +92,37 @@ def validadorDeNome(msg):
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
+def manipuladorDeArquivos(nome, notas):
+
+    """
+    Cria e adiciona dados a um arquivo csv
+    Nome: Nome do aluno
+    Notas: Notas do alunos
+    """
+
+    import csv
+    from os import path
+
+    #Condicional para criação do arquivo ou não
+    if path.exists('alunos.csv'):# Validando se um arquivo existe
+        with open('alunos.csv', 'a+', newline='') as arquivo:
+            escritor_csv = csv.writer(arquivo)
+            escritor_csv.writerow([nome, notas, media(notas)])
+
+    else:
+        with open('alunos.csv', 'w', newline='') as arquivo:
+            escritor_csv = csv.writer(arquivo)
+            escritor_csv.writerow(['Nome', 'Notas', 'Media'])
+            escritor_csv.writerow([nome, notas, media(notas)])
+
+
 def cadastroAluno():
     """
     Cadastra o nome do aluno e suas notas, adiciona os valores em um dicionario
     sendo o nome do aluno a key e suas notas uma tupla sendo o valor da key
     return: Não tem retorno
     """
-    
+
     while True:# Loop infinito
         LimparTela()
         cabecalho('CADASTRO DE ALUNOS')
@@ -114,7 +138,8 @@ def cadastroAluno():
             
         # Adiciona o nome do aluno no dicionario com key e sua lista de notas é convertida para tupla
         # e adicionada com valor
-        alunos[nome] = tuple(notas)
+
+        manipuladorDeArquivos(nome, notas)
 
         while True:# Loop infinito
             try:
@@ -130,16 +155,24 @@ def cadastroAluno():
             break# Finaliza com a função
 
 
-def exibirAlunos(cadastros):
+def exibirAlunos():
     """
     Exibe o nome do aluno, suas notas e sua média final
     cadasto: É o um dicionario com nome e notas do aluno
     return: Não tem retorno
     """
+
     from time import sleep
+    import csv
+    from os import path
+
     LimparTela()
     cabecalho('BOLETIM')
-    if len(cadastros) > 0:
+
+    if path.exists("alunos.csv"):
+
+        with open('alunos.csv', 'r', newline='') as arquivo:
+            
         for k, v in cadastros.items():# Loop finito
             # k == key ==  nome do aluno 
             # v == valor == notas do aluno
@@ -185,7 +218,7 @@ while True:
     if opc == 1:# Cadastro do aluno
         cadastroAluno()# Chama a função para o cadastro do aluno 
     elif opc == 2:# Exibir os alunos, suas notas e média
-        exibirAlunos(cadastros=alunos)# Chama a função para exibir o desempenho dos alunos
+        exibirAlunos()# Chama a função para exibir o desempenho dos alunos
     elif opc == 3:# finaliza o programa
         print('==' * 20) 
         print('Obrigado volte sempre!')

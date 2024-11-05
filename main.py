@@ -112,7 +112,7 @@ def manipuladorDeArquivos(nome, notas):
     else:
         with open('alunos.csv', 'w', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            escritor_csv.writerow(['Nome', 'Notas', 'Media'])
+            escritor_csv.writerow(['Nome', 'Notas', 'Média'])
             escritor_csv.writerow([nome, notas, media(notas)])
 
 
@@ -162,8 +162,7 @@ def exibirAlunos():
     return: Não tem retorno
     """
 
-    from time import sleep
-    import csv
+    import pandas as pd
     from os import path
 
     LimparTela()
@@ -171,20 +170,11 @@ def exibirAlunos():
 
     if path.exists("alunos.csv"):
 
-        with open('alunos.csv', 'r', newline='') as arquivo:
-            
-        for k, v in cadastros.items():# Loop finito
-            # k == key ==  nome do aluno 
-            # v == valor == notas do aluno
-            print(f'O aluno {k} teve as seguintes notas: ')
+        df = pd.read_csv('alunos.csv')
+        print(df.head())
+        
 
-            for e, n in enumerate(v):# Loop finito
-                # e == enumerate 
-                # n == nota
-                print(f'\t{e + 1}º nota: {n:.1f}')
-                sleep(0.5)
-            print(f'Meidia final do aluno {k} é de {media(v):.1f}')
-            print("==" * 20)
+
     else:
         print('Nenhum aluno foi cadastrado ainda')
 
@@ -205,10 +195,6 @@ def media(notas):
     soma = sum(notas)# soma de todas as notas
     m = soma / len(notas)# Calcula a média
     return m# retorno da média
- 
-
-#Programa principal
-alunos = {'Rodrigo': (0, 3.5, 2, 1), 'Natan': (0, 8, 9, 10)}# Dicionario dos alunos
 
 
 while True:

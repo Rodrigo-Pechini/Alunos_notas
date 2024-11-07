@@ -92,7 +92,7 @@ def validadorDeNome(msg):
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
-def manipuladorDeArquivos(nome, notas):
+def manipuladorDeArquivos(nome, notas, disciplina):
 
     """
     Cria e adiciona dados a um arquivo csv
@@ -107,13 +107,13 @@ def manipuladorDeArquivos(nome, notas):
     if path.exists('alunos.csv'):# Validando se um arquivo existe
         with open('alunos.csv', 'a+', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            escritor_csv.writerow([nome, notas, media(notas)])
+            escritor_csv.writerow([nome, disciplina, notas, media(notas)])
 
     else:
         with open('alunos.csv', 'w', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            escritor_csv.writerow(['Nome', 'Notas', 'Média'])
-            escritor_csv.writerow([nome, notas, media(notas)])
+            escritor_csv.writerow(['Nome', 'Disciplina', 'Notas', 'Media'])
+            escritor_csv.writerow([nome, disciplina, notas, media(notas)])
 
 
 def cadastroAluno():
@@ -126,20 +126,20 @@ def cadastroAluno():
     while True:# Loop infinito
         LimparTela()
         cabecalho('CADASTRO DE ALUNOS')
+        disciplinas = ['Portugues', 'Matematica']
         notas = []# Lista de notas
         nome = ""# Nome do aluno
         
         nome = validadorDeNome('Digite o nome do aluno: ').capitalize().strip()# Entrada do nome do aluno
-        provas = validadorDeNumeroInt('Quantas atividades/provas o {} fez: ', nome)# Entrada de quantidades de notas e serem inseridas
 
-        for num in range(0, provas):# Um loop finito
-            nota = validadorDeNumeroFloat('Digite a {}º nota: ', num + 1)# Entrada de notas do aluno
+        for num in range(0, len(disciplinas)):# Um loop finito
+            nota = validadorDeNumeroFloat('Digite a nota de {}: ', disciplinas[num])# Entrada de notas do aluno
             notas.append(nota)# Adiciona a ultima nota digitada do aluno em uma lista
             
         # Adiciona o nome do aluno no dicionario com key e sua lista de notas é convertida para tupla
         # e adicionada com valor
 
-        manipuladorDeArquivos(nome, notas)
+        manipuladorDeArquivos(nome=nome, disciplina=disciplinas, notas=notas)
 
         while True:# Loop infinito
             try:
@@ -164,16 +164,48 @@ def exibirAlunos():
 
     import pandas as pd
     from os import path
+    import matplotlib.pyplot as plt
 
     LimparTela()
-    cabecalho('BOLETIM')
+    # cabecalho('BOLETIM')
 
     if path.exists("alunos.csv"):
 
-        df = pd.read_csv('alunos.csv')
-        print(df.head())
-        
+        dados_pessoais = pd.read_csv('alunos.csv')
 
+        cabecalho('MENU DE EXIBIÇÃO')
+        print("""[1] Exibir no terminal\n[2] Exibir em PNG""")
+
+        while True:
+            opc = validadorDeNumeroInt('Digite um dos valores: ') # Entrada para opções
+
+            if opc == 1:
+                   
+                print(dados_pessoais.head())# Para exibir a tabela no terminal
+                break
+
+            elif opc == 2:# Para exibir uma tabela em formato PNG
+                
+                # Configurar a figura e o eixo onde a tabela será colocada
+                figura, eixo_tabela = plt.subplots()
+                eixo_tabela.axis('off')
+                
+                # Adicionar a tabela ao eixo com os dados do DataFrame
+                tabela = eixo_tabela.table(
+                                            cellText=dados_pessoais.values,  # Dados das células (os valores do DataFrame)
+                                            colLabels=dados_pessoais.columns, # Cabeçalhos das colunas
+                                            cellLoc='center', # Centralizar os dados das células
+                                            loc='center') # Centralizar a tabela na figura
+                
+                # Ajustar o tamanho da tabela para melhorar a legibilidade
+                tabela.scale(1, 2) # Aumentar o tamanho vertical das células
+                
+                # Salvar a tabela como uma imagem em alta resolução
+                figura.savefig('imagens\\tabela_alunos.png', dpi=300, bbox_inches='tight')
+                figura.show() # Exibir a imagem da tabela
+                break
+            else:
+                print('\033[31mERRO!! Valor invalido\033[m')
 
     else:
         print('Nenhum aluno foi cadastrado ainda')

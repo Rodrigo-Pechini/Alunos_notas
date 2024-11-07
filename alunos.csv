@@ -1,5 +1,2 @@
-Nome,Notas,Média
-Rodrigo,"[6.0, 5.0]",5.5
-Paulo,"[4.0, 5.0, 9.0, 8.0, 2.0, 2.0]",5.0
-Carlos,"[7.0, 8.0]",7.5
-Murilo,"[4.0, 5.0, 6.0]",5.0
+Nome,Disciplina,Notas,Media
+Paulo,"['Portugues', 'Matematica']","[5.0, 6.0]",5.5

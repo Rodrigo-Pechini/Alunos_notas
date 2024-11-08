@@ -92,7 +92,7 @@ def validadorDeNome(msg):
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
-def manipuladorDeArquivos(nome, notas, disciplina):
+def manipuladorDeArquivos(nome, notas):
 
     """
     Cria e adiciona dados a um arquivo csv
@@ -107,13 +107,13 @@ def manipuladorDeArquivos(nome, notas, disciplina):
     if path.exists('alunos.csv'):# Validando se um arquivo existe
         with open('alunos.csv', 'a+', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            escritor_csv.writerow([nome, disciplina, notas, media(notas)])
+            escritor_csv.writerow([nome, notas, media(notas)])
 
     else:
         with open('alunos.csv', 'w', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            escritor_csv.writerow(['Nome', 'Disciplina', 'Notas', 'Media'])
-            escritor_csv.writerow([nome, disciplina, notas, media(notas)])
+            escritor_csv.writerow(['Nome', 'Notas', 'Media'])
+            escritor_csv.writerow([nome, notas, media(notas)])
 
 
 def cadastroAluno():
@@ -126,20 +126,20 @@ def cadastroAluno():
     while True:# Loop infinito
         LimparTela()
         cabecalho('CADASTRO DE ALUNOS')
-        disciplinas = ['Portugues', 'Matematica']
         notas = []# Lista de notas
         nome = ""# Nome do aluno
         
         nome = validadorDeNome('Digite o nome do aluno: ').capitalize().strip()# Entrada do nome do aluno
+        provas = validadorDeNumeroInt('Quantas provas {} fez: ', nome)# Entrada para quantidade de notas
 
-        for num in range(0, len(disciplinas)):# Um loop finito
-            nota = validadorDeNumeroFloat('Digite a nota de {}: ', disciplinas[num])# Entrada de notas do aluno
+        for num in range(0, provas):# Um loop finito
+            nota = validadorDeNumeroFloat('Digite a nota de {}: ', num + 1)# Entrada de notas do aluno
             notas.append(nota)# Adiciona a ultima nota digitada do aluno em uma lista
             
         # Adiciona o nome do aluno no dicionario com key e sua lista de notas é convertida para tupla
         # e adicionada com valor
 
-        manipuladorDeArquivos(nome=nome, disciplina=disciplinas, notas=notas)
+        manipuladorDeArquivos(nome=nome, notas=notas)
 
         while True:# Loop infinito
             try:

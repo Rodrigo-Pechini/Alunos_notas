@@ -150,7 +150,7 @@ def exibirAlunos(cadastros):
                 # n == nota
                 print(f'\t{e + 1}º nota: {n:.1f}')
                 sleep(0.5)
-            print(f'Meidia final do aluno {k} é de {media(v):.1f}')
+            print(f'Média final do aluno {k} é de {media(v):.1f}')
             print("==" * 20)
     else:
         print('Nenhum aluno foi cadastrado ainda')

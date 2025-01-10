@@ -56,7 +56,7 @@ def validadorDeNumeroFloat(msg, n=None):
         try:# Tratamento de erro.
             numero = str(input(msg.format(n)))# Recebe um entrada qualquer do usuario.
             numero = removeVirgura(numero)# Remove a vilgula e volta como float.
-            if type(numero) == float:# Analiza se o tipo é float.
+            if isinstance(numero, float):# Analiza se o tipo é float.
                 return numero# Retorna o a entrada do usuario.
         except (ValueError, IndexError):# Erro a ser tratato.
             print('\033[31mERRO!! Valor invalido\033[m')
@@ -133,7 +133,7 @@ def cadastroAluno():
         provas = validadorDeNumeroInt('Quantas provas {} fez: ', nome)# Entrada para quantidade de notas
 
         for num in range(0, provas):# Um loop finito
-            nota = validadorDeNumeroFloat('Digite a nota de {}: ', num + 1)# Entrada de notas do aluno
+            nota = validadorDeNumeroFloat('Digite a {}º nota: ', num + 1)# Entrada de notas do aluno
             notas.append(nota)# Adiciona a ultima nota digitada do aluno em uma lista
             
         # Adiciona o nome do aluno no dicionario com key e sua lista de notas é convertida para tupla

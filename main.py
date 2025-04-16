@@ -17,7 +17,7 @@ def menu():
 [2] Exibir alunos e notas
 [3] Sair
 """)
-    opc = validadorDeNumeroInt('Digite uma das opções: ')
+    opc = validadorDeNumeroInt('Digite uma das opções: ')# validando se o numero é inteiro
     return opc
 
 
@@ -82,7 +82,7 @@ def validadorDeNome(msg):
     Valida a entrada do nome do aluno verifica se tem algum erro de digitação,
     com espaços entre as letras, espaço em branco ou numero no nome
     msg: uma mensagem personalizada
-    return: Retorna o nomel do aluno
+    return: Retorna o nome do aluno
     """
     while True:# Loop infinito
         nome = str(input(msg))# Recebe um entrada qualquer do usuario.   
@@ -227,6 +227,10 @@ def media(notas):
     soma = sum(notas)# soma de todas as notas
     m = soma / len(notas)# Calcula a média
     return m# retorno da média
+ 
+
+#Programa principal
+alunos = {'Rodrigo': (0, 3.5, 2, 1), 'Natan': (0, 8, 9, 10)}# Dicionario dos alunos
 
 
 while True:

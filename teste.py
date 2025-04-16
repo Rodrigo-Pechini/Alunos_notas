@@ -35,3 +35,9 @@ for aluno in alunos:
 # Exibindo a tabela com tabulate
 print(tabulate(boletim, headers=['Aluno', 'Disciplina', 'Nota', 'Média'], tablefmt='fancy_grid'))
 
+
+import pandas as pd
+
+df = pd.read_csv('alunos.csv')
+
+df.head()

@@ -61,6 +61,21 @@ def validadorDeNumeroFloat(msg, n=None):
         except (ValueError, IndexError):# Erro a ser tratato.
             print('\033[31mERRO!! Valor invalido\033[m')
 
+def criaArquivo():
+    import pandas as pd
+    import sqlite3
+
+    df = pd.read_csv('alunos.csv')
+
+    conexao = sqlite3.connect('alunos.db')
+
+    df.to_sql('alunos', conexao, if_exists='replace', index=False)
+
+    conexao.close()   
+    
+    #criando um arquvio para ser lido no excel
+    df.to_excel('arquivos\\alunos.xlsx', index=False)
+    pass
 
 def validadorDeNumeroInt(msg, n=None):
     """    
@@ -174,14 +189,14 @@ def exibirAlunos():
         dados_pessoais = pd.read_csv('alunos.csv')
 
         cabecalho('MENU DE EXIBIÇÃO')
-        print("""[1] Exibir no terminal\n[2] Exibir em PNG""")
+        print("""[1] Exibir no terminal\n[2] Exibir em PNG\n[3] Criar um aquivo em xlsx""")
 
         while True:
             opc = validadorDeNumeroInt('Digite um dos valores: ') # Entrada para opções
 
             if opc == 1:
                    
-                print(dados_pessoais.head())# Para exibir a tabela no terminal
+                print(dados_pessoais.head(50))# Para exibir a tabela no terminal
                 break
 
             elif opc == 2:# Para exibir uma tabela em formato PNG
@@ -204,6 +219,12 @@ def exibirAlunos():
                 figura.savefig('imagens\\tabela_alunos.png', dpi=300, bbox_inches='tight')
                 figura.show() # Exibir a imagem da tabela
                 break
+
+            elif opc == 3:
+
+                criaArquivo()
+                break
+
             else:
                 print('\033[31mERRO!! Valor invalido\033[m')
 

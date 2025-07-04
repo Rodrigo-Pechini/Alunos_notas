@@ -1,6 +1,9 @@
 from tabulate import tabulate
 
 # Dados do boletim escolar
+
+estudantes = {'Rodrigo': {'Portugues': 4.5, 'Matematica': 10}}
+
 alunos = [
     {
         'Aluno': 'Alice',

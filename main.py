@@ -45,7 +45,7 @@ def removeVirgura(num):
     return float(numero)# Retorna o numero em float com ponto
 
 
-def validadorDeNumeroFloat(msg, n=None):
+def validadorDeNumeroFloat(msg, f=None):
     """
     Valida a entrada de um numero se ele é float ou não
     msg: uma mensagem personalizada
@@ -54,12 +54,13 @@ def validadorDeNumeroFloat(msg, n=None):
     """
     while True:# Loop infinito
         try:# Tratamento de erro.
-            numero = str(input(msg.format(n)))# Recebe um entrada qualquer do usuario.
+            numero = str(input(msg.format(f)))# Recebe um entrada qualquer do usuario.
             numero = removeVirgura(numero)# Remove a vilgula e volta como float.
             if isinstance(numero, float):# Analiza se o tipo é float.
                 return numero# Retorna o a entrada do usuario.
         except (ValueError, IndexError):# Erro a ser tratato.
             print('\033[31mERRO!! Valor invalido\033[m')
+
 
 def criaArquivo():
     import pandas as pd
@@ -67,15 +68,9 @@ def criaArquivo():
 
     df = pd.read_csv('alunos.csv')
 
-    conexao = sqlite3.connect('alunos.db')
-
-    df.to_sql('alunos', conexao, if_exists='replace', index=False)
-
-    conexao.close()   
-    
     #criando um arquvio para ser lido no excel
     df.to_excel('arquivos\\alunos.xlsx', index=False)
-    pass
+
 
 def validadorDeNumeroInt(msg, n=None):
     """    
@@ -107,7 +102,7 @@ def validadorDeNome(msg):
             print('\033[31mERRO!! Valor invalido\033[m')
 
 
-def manipuladorDeArquivos(nome, notas):
+def manipuladorDeArquivos(boletim):
 
     """
     Cria e adiciona dados a um arquivo csv
@@ -122,13 +117,27 @@ def manipuladorDeArquivos(nome, notas):
     if path.exists('alunos.csv'):# Validando se um arquivo existe
         with open('alunos.csv', 'a+', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            escritor_csv.writerow([nome, notas, media(notas)])
+            for k1, v1 in boletim.items():
+                nome = k1
+                for k2, v2 in v1.items():
+                    if k2 == 'Portugues':
+                        nota_portugues = v2
+                    else:
+                        nota_matematica = v2
+            escritor_csv.writerow([nome, nota_portugues, nota_matematica, media(n1=nota_matematica, n2=nota_portugues)])
 
     else:
         with open('alunos.csv', 'w', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
-            escritor_csv.writerow(['Nome', 'Notas', 'Media'])
-            escritor_csv.writerow([nome, notas, media(notas)])
+            escritor_csv.writerow(['Nome', 'Portugues', 'Matematica', 'Media'])
+            for k1, v1 in boletim.items():
+                nome = k1
+                for k2, v2 in v1.items():
+                    if k2 == 'Portugues':
+                        nota_portugues = v2
+                    else:
+                        nota_matematica = v2
+            escritor_csv.writerow([nome, nota_portugues, nota_matematica, media(n1=nota_matematica, n2=nota_portugues)])
 
 
 def cadastroAluno():
@@ -141,20 +150,25 @@ def cadastroAluno():
     while True:# Loop infinito
         LimparTela()
         cabecalho('CADASTRO DE ALUNOS')
-        notas = []# Lista de notas
+
+        boletim = {}
+
         nome = ""# Nome do aluno
+        portugues = 0
+        matematica = 0
         
         nome = validadorDeNome('Digite o nome do aluno: ').capitalize().strip()# Entrada do nome do aluno
-        provas = validadorDeNumeroInt('Quantas provas {} fez: ', nome)# Entrada para quantidade de notas
+        portugues = validadorDeNumeroFloat('Quanto foi a nota de portugues do {}: ', f=nome)
+        matematica = validadorDeNumeroFloat('Quanto foi a nota de matematica do {}: ', f=nome)
 
-        for num in range(0, provas):# Um loop finito
-            nota = validadorDeNumeroFloat('Digite a {}º nota: ', num + 1)# Entrada de notas do aluno
-            notas.append(nota)# Adiciona a ultima nota digitada do aluno em uma lista
-            
+        boletim[nome] = {}
+        boletim[nome]['Portugues'] = portugues
+        boletim[nome]['Matematica'] = matematica
+
         # Adiciona o nome do aluno no dicionario com key e sua lista de notas é convertida para tupla
         # e adicionada com valor
 
-        manipuladorDeArquivos(nome=nome, notas=notas)
+        manipuladorDeArquivos(boletim=boletim)
 
         while True:# Loop infinito
             try:
@@ -239,20 +253,18 @@ def exibirAlunos():
         print('\033[31mERRO!! Valor invalido\033[m')
 
 
-def media(notas):
+def media(n1, n2):
     """
     Calcula a média do aluno
     notas: É a tupla de notas do aluno
     return: retorna a média calculada
     """
-    soma = sum(notas)# soma de todas as notas
-    m = soma / len(notas)# Calcula a média
-    return m# retorno da média
+    soma = n1 + n2 # soma de todas as notas
+    m = soma / 2 # Calcula a média
+    return m # retorno da média
  
 
 #Programa principal
-alunos = {'Rodrigo': (0, 3.5, 2, 1), 'Natan': (0, 8, 9, 10)}# Dicionario dos alunos
-
 
 while True:
     

@@ -260,9 +260,7 @@ def media(n1, n2):
     return: retorna a média calculada
     """
     soma = n1 + n2 # soma de todas as notas
-    m = soma / 2 # Calcula a média
-    return m # retorno da média
- 
+    return float(f'{(soma / 2):.1f}') # Calcula a média
 
 #Programa principal
 

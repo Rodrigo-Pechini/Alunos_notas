@@ -1,4 +1,4 @@
-boletim = {}
+'''boletim = {}
 
 nome = str(input('digite um nome: '))
 portugues = int(input('digite uma nota de portugues: '))
@@ -22,4 +22,8 @@ for k1, v1 in boletim.items():
             nota_m = v2
 
 print(nome, p, nota_p, m, nota_m)
-            
+            '''
+
+n = 20
+
+print(float(n / 2))

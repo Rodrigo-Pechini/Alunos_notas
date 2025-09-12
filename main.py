@@ -1,8 +1,13 @@
+import os
+import csv
+import pandas as pd
+import matplotlib.pyplot as plt
+from os import path
+
 def LimparTela():
     """
     Uma função para limpar o terminal.
     """
-    import os # Importa uma biblioteca
     os.system('cls')# função a ser utilizada
 
 
@@ -35,7 +40,7 @@ def cabecalho(msg):
     print('=' * tamanho)
 
 
-def removeVirgura(num):
+def removeVirgula(num):
     """
     Recebe um numero em formato str com virgula e retorna ele com um ponto
     e em formato float.
@@ -55,7 +60,7 @@ def validadorDeNumeroFloat(msg, f=None):
     while True:# Loop infinito
         try:# Tratamento de erro.
             numero = str(input(msg.format(f)))# Recebe um entrada qualquer do usuario.
-            numero = removeVirgura(numero)# Remove a vilgula e volta como float.
+            numero = removeVirgula(numero)# Remove a vilgula e volta como float.
             if isinstance(numero, float):# Analiza se o tipo é float.
                 return numero# Retorna o a entrada do usuario.
         except (ValueError, IndexError):# Erro a ser tratato.
@@ -63,10 +68,10 @@ def validadorDeNumeroFloat(msg, f=None):
 
 
 def criaArquivo():
-    import pandas as pd
-    import sqlite3
-
-    df = pd.read_csv('alunos.csv')
+    """
+    Cria um arquivo xlsx para ser lido no excel
+    """
+    df = pd.read_csv('dados\\alunos.csv')
 
     #criando um arquvio para ser lido no excel
     df.to_excel('arquivos\\alunos.xlsx', index=False)
@@ -110,12 +115,9 @@ def manipuladorDeArquivos(boletim):
     Notas: Notas do alunos
     """
 
-    import csv
-    from os import path
-
     #Condicional para criação do arquivo ou não
-    if path.exists('alunos.csv'):# Validando se um arquivo existe
-        with open('alunos.csv', 'a+', newline='') as arquivo:
+    if path.exists('dados\\alunos.csv'):# Validando se um arquivo existe
+        with open('dados\\alunos.csv', 'a+', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
             for k1, v1 in boletim.items():
                 nome = k1
@@ -127,7 +129,7 @@ def manipuladorDeArquivos(boletim):
             escritor_csv.writerow([nome, nota_portugues, nota_matematica, media(n1=nota_matematica, n2=nota_portugues)])
 
     else:
-        with open('alunos.csv', 'w', newline='') as arquivo:
+        with open('dados\\alunos.csv', 'w', newline='') as arquivo:
             escritor_csv = csv.writer(arquivo)
             escritor_csv.writerow(['Nome', 'Portugues', 'Matematica', 'Media'])
             for k1, v1 in boletim.items():
@@ -187,20 +189,16 @@ def cadastroAluno():
 def exibirAlunos():
     """
     Exibe o nome do aluno, suas notas e sua média final
-    cadasto: É o um dicionario com nome e notas do aluno
+    cadastro: É o um dicionario com nome e notas do aluno
     return: Não tem retorno
     """
-
-    import pandas as pd
-    from os import path
-    import matplotlib.pyplot as plt
 
     LimparTela()
     # cabecalho('BOLETIM')
 
-    if path.exists("alunos.csv"):
+    if path.exists("dados\\alunos.csv"):
 
-        dados_pessoais = pd.read_csv('alunos.csv')
+        dados_pessoais = pd.read_csv('dados\\alunos.csv')
 
         cabecalho('MENU DE EXIBIÇÃO')
         print("""[1] Exibir no terminal\n[2] Exibir em PNG\n[3] Criar um aquivo em xlsx""")
@@ -230,7 +228,7 @@ def exibirAlunos():
                 tabela.scale(1, 2) # Aumentar o tamanho vertical das células
                 
                 # Salvar a tabela como uma imagem em alta resolução
-                figura.savefig('imagens\\tabela_alunos.png', dpi=300, bbox_inches='tight')
+                figura.savefig('arquivos\\imagens\\tabela_alunos.png', dpi=300, bbox_inches='tight')
                 figura.show() # Exibir a imagem da tabela
                 break
 
@@ -279,3 +277,4 @@ while True:
     else:# Caso entrada de algum valor errado.
         LimparTela()
         print('\033[31mDigite uma opção validada.\033[m')
+

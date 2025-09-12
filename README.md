@@ -1,6 +1,6 @@
 ##  Um Programa para Cadastro de Alunos e Notas
 
-**Conteúdo:** 
+**Conteúdo:**
 
 Este programa apresenta um sistema simples para gerenciar cadastro de alunos e suas notas, além de exibir alunos já cadastrados.
 

@@ -263,6 +263,9 @@ def media(n1, n2):
 #Programa principal
 
 while True:
+
+    os.makedirs('dados', exist_ok=True)
+    os.makedirs('arquivos/imagens', exist_ok=True)
     
     opc = menu()# Entrada para opções
 

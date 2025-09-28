@@ -264,6 +264,7 @@ def media(n1, n2):
 
 while True:
 
+    # Validando se as pastas existem
     os.makedirs('dados', exist_ok=True)
     os.makedirs('arquivos/imagens', exist_ok=True)
     
